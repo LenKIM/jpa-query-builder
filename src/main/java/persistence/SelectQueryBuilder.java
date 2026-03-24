@@ -78,18 +78,14 @@ public class SelectQueryBuilder {
             throw new IllegalStateException("LIMIT 값은 음수일 수 없습니다.");
         }
 
-        if (!froms.isEmpty()) {
-            if (columns.isEmpty()) {
-                columns.add("*");
-            }
-
-            return "SELECT " + String.join(", ", columns) +
-                    " FROM " + String.join(", ", froms) +
-                    (orders.size() > 0 ? " ORDER BY " + String.join(", ", orders) : "") +
-                    (limits.size() > 0 ? " LIMIT " + String.join(", ", limits) : "");
-
+        if (columns.isEmpty()) {
+            columns.add("*");
         }
 
-        throw new IllegalStateException();
+        return "SELECT " + String.join(", ", columns) +
+                " FROM " + String.join(", ", froms) +
+                (!orders.isEmpty() ? " ORDER BY " + String.join(", ", orders) : "") +
+                (!limits.isEmpty() ? " LIMIT " + String.join(", ", limits) : "");
+
     }
 }
