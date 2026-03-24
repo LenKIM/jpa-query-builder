@@ -71,7 +71,17 @@ class SelectQueryBuilderTest {
         SelectQueryBuilder builder = new SelectQueryBuilder()
                 .select("*");
 
-        assertThrows(IllegalStateException.class, () -> builder.build());
+        assertThrows(IllegalStateException.class, builder::build);
+    }
+
+    @Test
+    void LIMIT_음수_예외_발생() {
+        SelectQueryBuilder builder = new SelectQueryBuilder()
+                .select("*")
+                .from("users")
+                .limit(-1); // Look at this
+
+        assertThrows(IllegalStateException.class, builder::build);
     }
 
 }
